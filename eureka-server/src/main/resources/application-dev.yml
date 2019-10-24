@@ -1,0 +1,21 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: eureka-server
+  security:                 #设置用户名、密码，防止不需要用户名密码就可以登录注册中心的后台
+    user:
+      name: eureka-username #spring security 用户名
+      password: eureka-pwd  #spring security 密码
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false   #是否向服务注册中心注册自己
+    fetch-registry: false         #是否检索服务  是否从eureka上获取注册信息
+    service-url:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:${server.port}/eureka/
+
+#eureka注册中心可以考虑和admin监控合并为一个项目

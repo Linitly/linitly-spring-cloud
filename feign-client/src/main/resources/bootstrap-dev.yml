@@ -1,0 +1,37 @@
+info:
+  actuator-prefix: actu
+  health-check-url: healthCheck
+  info-url: info
+  ip-address: localhost
+  http-or-https: http
+  author: "Linitly"
+  version: @version@
+  title: "feign-client客户端"
+  description: "这是feign-client客户端测试的描述"
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-username:eureka-pwd@localhost:9000/eureka/
+  instance:
+    metadata-map:
+      management:
+        context-path: ${info.actuator-prefix}
+    health-check-url: ${info.http-or-https}://${info.ip-address}:${server.port}/${eureka.instance.metadata-map.management.context-path}/${info.health-check-url}
+    status-page-url-path: ${info.http-or-https}://${info.ip-address}:${server.port}/${eureka.instance.metadata-map.management.context-path}/${info.info-url}
+
+server:
+  port: 9002
+
+spring:
+  application:
+    name: @artifactId@
+  cloud:
+    config:
+      username: config-username          #配置中心的访问用户名
+      password: config-pwd               #配置中心的访问密码
+      label: @version@                   #获取配置文件的分支，默认是master。如果是是本地获取的话，则无用；此处使用读取pom中版本的信息，以版本号作为分支使用
+      profile: ${spring.profiles.active} #获取配置的策略，这里根据环境来区分读取的文件，dev为本地，test为测试，prod为生产环境
+      discovery:
+        enabled: true                    #开启配置信息发现
+        service-id: config-server        #指定配置中心的service-id，便于扩展为高可用配置集群

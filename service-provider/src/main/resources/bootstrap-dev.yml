@@ -1,0 +1,24 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: @artifactId@
+  cloud:
+    config:
+      username: config-username          #配置中心的访问用户名
+      password: config-pwd               #配置中心的访问密码
+      label: @version@                   #获取配置文件的分支，默认是master。如果是是本地获取的话，则无用；此处使用读取pom中版本的信息，以版本号作为分支使用
+      profile: ${spring.profiles.active} #获取配置的策略，这里根据环境来区分读取的文件，dev为本地，test为测试，prod为生产环境
+      discovery:
+        enabled: true                    #开启配置信息发现
+        service-id: config-server        #指定配置中心的service-id，便于扩展为高可用配置集群
+  boot:
+    admin:
+      client:
+        url: http://localhost:9990
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-username:eureka-pwd@localhost:9000/eureka/

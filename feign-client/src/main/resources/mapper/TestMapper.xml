@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linitly.feign.client.dao.TestMapper">
+  <resultMap id="BaseResultMap" type="com.linitly.service.provider.entity.feign_client.Test">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="test" jdbcType="VARCHAR" property="test" />
+  </resultMap>
+  
+  <select id="findById" resultType="java.lang.String">
+      SELECT test FROM test WHERE id = 1
+  </select>
+</mapper>

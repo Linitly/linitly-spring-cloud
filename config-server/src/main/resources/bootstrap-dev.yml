@@ -1,0 +1,59 @@
+info:
+  actuator-prefix: actu
+  health-check-url: healthCheck
+  info-url: info
+  ip-address: localhost               #环境不同需修改
+  http-or-https: http                 #环境不同可能需要修改
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-username:eureka-pwd@localhost:9000/eureka/         #环境不同需修改，为注册中心地址
+  instance:
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+      management:
+        context-path: ${info.actuator-prefix}
+    health-check-url: ${info.http-or-https}://${info.ip-address}:${server.port}/${eureka.instance.metadata-map.management.context-path}/${info.health-check-url}
+    status-page-url-path: ${info.http-or-https}://${info.ip-address}:${server.port}/${eureka.instance.metadata-map.management.context-path}/${info.info-url}
+
+server:
+  port: 9100
+
+spring:
+  application:
+    name: @artifactId@
+  security:                 #设置用户名、密码，防止不需要用户名密码就可以访问配置中心的配置文件
+    user:
+      name: config-username #spring security 用户名
+      password: config-pwd  #spring security 密码
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/LinRefuse/Linitly-SpringCloud-Config.git #git仓库url
+          search-paths: '{application}'   #git仓库地址下的相对地址，多个用逗号","分割;此处使用的是根据服务serviceId取不同的文件夹下的配置文件
+          username: LinRefuse #git仓库用户名
+          password: lxn207667 #git仓库密码
+          default-label: @version@  #如果git上创建了多个分支，此处需要配置，否则通过配置中心获取不到客户端的配置信息
+    bus:
+      trace:
+        enabled: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+management:
+  endpoints:
+    web:
+      base-path: /${info.actuator-prefix}       #修改前缀，默认是/actuator
+      path-mapping:
+        health: ${info.health-check-url}  #修改健康检查路由
+      exposure:
+        include: "*"         #暴露所有端点 默认是info,health
+    endpoint:
+      health:
+        show-details: ALWAYS
