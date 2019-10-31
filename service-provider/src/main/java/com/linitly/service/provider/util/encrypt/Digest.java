@@ -157,7 +157,7 @@ public class Digest {
 
 	public static String udpSign(String aValue) {
 		try {
-			byte[] input = aValue.getBytes("UTF-8");
+			byte[] input = aValue.getBytes(ConfigureEncryptAndDecrypt.CHAR_ENCODING);
 			MessageDigest md = MessageDigest.getInstance("SHA1");
 			return new String(Base64.encode(md.digest(input)), ENCODE);
 		} catch (Exception e) {

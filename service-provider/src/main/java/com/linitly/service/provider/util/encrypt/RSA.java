@@ -154,9 +154,8 @@ public class RSA {
 
             return new String(Base64.encodeBase64(signed));
         } catch (Exception e) {
-
+            log.error(e.getMessage(), e);
         }
-
         return null;
     }
 

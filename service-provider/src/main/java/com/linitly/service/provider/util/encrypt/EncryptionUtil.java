@@ -1,5 +1,7 @@
 package com.linitly.service.provider.util.encrypt;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.security.MessageDigest;
 
 /**
@@ -19,7 +21,7 @@ public class EncryptionUtil {
      * @return
      */
     public static String md5(String str, String salt) {
-        if (salt != null) str = str + salt;
+        if (StringUtils.isNotBlank(salt)) str = str + salt;
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(str.getBytes());
@@ -27,7 +29,7 @@ public class EncryptionUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "";
+        return null;
     }
 
     /**
@@ -44,7 +46,7 @@ public class EncryptionUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "";
+        return null;
     }
 
     /**
@@ -61,7 +63,7 @@ public class EncryptionUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "";
+        return null;
     }
 
     /**
