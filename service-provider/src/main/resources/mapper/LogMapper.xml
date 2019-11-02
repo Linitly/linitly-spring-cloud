@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linitly.service.provider.dao.LogMapper">
+  <resultMap id="BaseResultMap" type="com.linitly.service.provider.entity.common.BaseLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="operation" jdbcType="VARCHAR" property="operation" />
+    <result column="entity_id" jdbcType="INTEGER" property="entityId" />
+    <result column="log" jdbcType="VARCHAR" property="log" />
+    <result column="change_json" jdbcType="VARCHAR" property="changeJson" />
+    <result column="operator_id" jdbcType="VARCHAR" property="operatorId" />
+    <result column="operator_type" jdbcType="INTEGER" property="operatorType" />
+    <result column="table_name" jdbcType="VARCHAR" property="tableName" />
+    <result column="enabled" jdbcType="BIT" property="enabled" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="last_modified_time" jdbcType="TIMESTAMP" property="lastModifiedTime" />
+  </resultMap>
+  
+  <insert id="insert" parameterType="com.siwei.life.insurance.helper.entity.BaseLog">
+    insert into ${tableName} (ip, operation, entity_id, log, change_json, table_name, operator_id, operator_type)
+    values (#{ip}, #{operation}, #{entityId}, #{log}, #{changeJson}, #{tableName}, #{operatorId}, #{operatorType})
+  </insert>
+  
+  <insert id="insertAll" parameterType="java.util.Map">
+  	insert into ${tableName} (ip, operation, entity_id, log, change_json, table_name, operator_id, operator_type)
+  	values
+  	<foreach collection="baseLogs" separator="," item="baseLog" index="index">
+  		(#{baseLog.ip}, #{baseLog.operation}, #{baseLog.entityId}, #{baseLog.log},
+  		 #{baseLog.changeJson}, #{baseLog.tableName}, #{baseLog.operatorId}, #{baseLog.operatorType})
+  	</foreach>
+  </insert>
+</mapper>
