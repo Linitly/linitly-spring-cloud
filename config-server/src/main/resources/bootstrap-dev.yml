@@ -4,6 +4,7 @@ info:
   info-url: info
   ip-address: localhost               #环境不同需修改
   http-or-https: http                 #环境不同可能需要修改
+  version: @version@
 
 eureka:
   client:
@@ -36,7 +37,7 @@ spring:
           search-paths: '{application}'   #git仓库地址下的相对地址，多个用逗号","分割;此处使用的是根据服务serviceId取不同的文件夹下的配置文件
           username: LinRefuse #git仓库用户名
           password: lxn207667 #git仓库密码
-          default-label: @version@  #如果git上创建了多个分支，此处需要配置，否则通过配置中心获取不到客户端的配置信息
+          default-label: ${info.version}  #如果git上创建了多个分支，此处需要配置，否则通过配置中心获取不到客户端的配置信息
     bus:
       trace:
         enabled: true

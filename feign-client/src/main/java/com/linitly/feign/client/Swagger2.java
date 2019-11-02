@@ -1,6 +1,6 @@
 package com.linitly.feign.client;
 
-import com.linitly.service.provider.entity.common.SwaggerEntity;
+import com.linitly.service.provider.config.InfoProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +20,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class Swagger2 {
 
     @Autowired
-    private SwaggerEntity swaggerEntity;
+    private InfoProperties swaggerEntity;
 
     @Bean
     public Docket createRestApi() {

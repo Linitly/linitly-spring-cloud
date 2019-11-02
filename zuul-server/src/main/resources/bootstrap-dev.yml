@@ -19,7 +19,7 @@ spring:
     config:
       username: config-username          #配置中心的访问用户名
       password: config-pwd               #配置中心的访问密码
-      label: @version@                   #获取配置文件的分支，默认是master。如果是是本地获取的话，则无用；此处使用读取pom中版本的信息，以版本号作为分支使用
+      label: ${info.version}             #获取配置文件的分支，默认是master。如果是是本地获取的话，则无用；此处使用读取pom中版本的信息，以版本号作为分支使用
       profile: ${spring.profiles.active} #获取配置的策略，这里根据环境来区分读取的文件，dev为本地，test为测试，prod为生产环境
       discovery:
         enabled: true                    #开启配置信息发现
@@ -38,7 +38,7 @@ eureka:
 
 zuul:
   #路由前缀，可用作版本控制
-  prefix: /v@version@
+  prefix: /v${info.version}
   #忽略所有微服务默认，只路由指定的微服务，默认情况下，只要引入了zuul后，就会自动一个默认的路由配置，但有些时候我们可能不想要默认的路由配置规则，想自己进行定义
   ignored-services: "*"
   #转发前是否去掉路由前缀，默认为true，此处是去掉zuul.prefix的路由信息，也可以配置是否去掉单个服务的匹配路由前缀

@@ -5,7 +5,6 @@
  */
 package com.linitly.zuul.server.config;
 
-import com.linitly.zuul.server.entity.SwaggerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -27,7 +26,7 @@ public class DocumentationConfig implements SwaggerResourcesProvider {
     @Autowired
     private DiscoveryClient discoveryClient;
     @Autowired
-    private SwaggerEntity swaggerEntity;
+    private InfoProperties infoProperties;
     @Value("${spring.application.name}")
     private String applicationName;
     @Value("${zuul.prefix}")
@@ -38,7 +37,7 @@ public class DocumentationConfig implements SwaggerResourcesProvider {
         List<SwaggerResource> resources = new ArrayList<>();
         // 排除自身, 将其他的服务添加进去
         discoveryClient.getServices().stream().filter(s -> !s.equals(applicationName)).forEach(name -> {
-            resources.add(swaggerResource(name, zuulPrefix + "/" + name + "/v2/api-docs", swaggerEntity.getVersion()));
+            resources.add(swaggerResource(name, zuulPrefix + "/" + name + "/v2/api-docs", infoProperties.getVersion()));
         });
         return resources;
     }
